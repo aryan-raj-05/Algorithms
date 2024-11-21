@@ -1,4 +1,4 @@
-import copy
+import random
 
 class QuickSort:
 	"""
@@ -9,16 +9,21 @@ class QuickSort:
 		_sort(arr, lo, hi): Internal method for recursive Quicksort.
 		_choose_pivot(arr, lo, hi): Selects a pivot for partitioning.
 		_partition(arr, lo, hi): In-place partitioning.
-		_swap(arr, i, j): Utility to swap two elements in the array.
 	"""
-
 	@staticmethod
 	def sort(arr: list) -> None:
+		"""
+		Public method to sort the array.
+		Args:
+			arr(list): The array to be sorted
+		"""
+		if not arr:
+			return
 		QuickSort._sort(arr, 0, len(arr) - 1)
 
 
 	@staticmethod
-	def _sort(arr: list, lo, hi) -> None:
+	def _sort(arr: list, lo: int, hi: int) -> None:
 		"""
     	Recursively sorts the array in-place using the QuickSort algorithm.
 
@@ -38,15 +43,17 @@ class QuickSort:
 		QuickSort._sort(arr, ind + 1, hi)
 
 
-	# chooses pivot and if
-	# index of pivot != lo
-	# then swap value of index lo with pivot
 	@staticmethod
-	def _choose_pivot(arr: list, lo, hi) -> None:
+	def _choose_pivot(arr: list, lo: int, hi: int) -> None:
 		"""
 		Chooses a pivot and swaps it with arr[lo]
+		Args:
+			arr (list): The array being sorted.
+			lo (int): The starting index of the partition.
+			hi (int): The ending index of the partition.
 		"""
-		...
+		random_ind = random.randint(lo, hi)
+		arr[lo], arr[random_ind] = arr[random_ind], arr[lo]
 
 
 	@staticmethod
@@ -69,12 +76,8 @@ class QuickSort:
 		pivot = arr[lo]
 		for j in range(lo + 1, hi + 1):
 			if arr[j] < pivot:
-				QuickSort._swap(arr, i, j)
+				arr[i], arr[j] = arr[j], arr[i]
 				i += 1
-		QuickSort._swap(arr, i - 1, lo)
+		arr[i - 1], arr[lo] = arr[lo], arr[i - 1]
+
 		return i - 1
-
-
-	@staticmethod
-	def _swap(arr:list, i, j) -> None:
-		arr[i], arr[j] = arr[j], arr[i]
